@@ -1,18 +1,28 @@
-import { Fragment } from "react/jsx-runtime";
+import { useState } from "react";
+interface Props {
+    items: string[];
+    heading: string;
+    onSelectItem: (item: string) => void;
+}
 
-function ListGroup() {
-  let item = ["New York", "Los Angeles", "Chicago", "Houston", "Phoenix"];
+function ListGroup({items, heading, onSelectItem}: Props) {
+
+  const [selectedIndex, setSelectedIndex] = useState(-1);
 
   return (
     <>
-      <h1>List</h1>
-      {item.length === 0 && <p>No items found</p>}
+      <h1>{heading}</h1>
+      {items.length === 0 && <p>No items found</p>}
       <ul className="list-group">
-        {item.map((item) => (
+        {items.map((item, index) => (
           <li
-            className="list-group-item"
+            className={
+              selectedIndex === index
+                ? "list-group-item active"
+                : "list-group-item"
+            }
             key={item}
-            onClick={(event) => console.log(BlobEvent)}
+            onClick={() => setSelectedIndex(index)}
           >
             {item}
           </li>
